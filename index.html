@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script type="module" src="./assets/js/maps.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cheerio/1.0.0/cheerio.min.js"></script>
+    <title>Scandic Hotels</title>
+</head>
+<body>
+    <header>
+        <div class="row no-gutters">
+            <a href ="index.html" class="col-md-3 logo">
+            </a>
+            <div class="col-md-9">
+                <div class="row no-gutters bg-color-brand-description">
+                    <div class ="col heading">
+                        <h1 class ="brand">Scandic Hotels</h1>
+                        <h2 class="description">The members site where reviews, posts and others can be shared.</h2>
+                    </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col">
+                        <ul id="nav" class="list-inline menucontainer">
+                            <li class="col-6 col-sm-3 ui-menu-color-guide list-inline-item navitem">
+                                <a href="index.html" class="hvr-sweep-to-right"><i class="fa fa-star" aria-hidden="true"></i><span>Visit us</span></a>
+                            </li>
+                            <li class="col-6 col-sm-3 ui-menu-color-contact list-inline-item navitem">
+                                <a href="contact.html" class="hvr-sweep-to-right"><i class="fa fa-comments" aria-hidden="true"></i><span> Contact us </span></a>
+                            </li>
+                            <li class="col-6 col-sm-3 ui-menu-color-post list-inline-item navitem">
+                                <a href="posts.html" class="hvr-sweep-to-right"><i class="fa fa-book" aria-hidden="true"></i><span> Posts & Reviews</span></a>
+                            </li>
+                            <li class="col-6 col-sm-3 ui-menu-color-signIn list-inline-item navitem">
+                                <a href="signIn.html" class="hvr-sweep-to-right"><i class="fa fa-sign-in" aria-hidden="true"></i><span> Sign in/out</span></a>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+
+        </div>
+        
+        </div>
+        
+    </header>
+    <section class="container-fluid">
+        <div class="row row-table">
+            <div class="col-md-8 explore-scandic section-column">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="section-heading uppercase">Explore Scandic</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10 offset-1 offset-sm-0 col-sm-4 col-md-4">
+                        <div class="row">
+                            <div class="col-2">
+                                <i class="explore-scandic-icon fa fa-check" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-10">
+                                <h4 class="explore-scandic-heading uppercase">Our destinations:</h4>
+                                <p>
+                                    Scandic is the largest Nordic hotel operator with a network of about 280 hotels with 58,000 hotel rooms in operation and under development in six countries.
+                                </p>
+                                <p>Your next adventure starts here. Get inspired by Scandics' help for your next Nordic adventure to Sweden, Norway, Denmark, Finlad. And also to Germany, and Poland.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-10 offset-1 offset-sm-0 col-sm-4 col-md-4">
+                        <div class="row">
+                            <div class="col-2">
+                                <i class="explore-scandic-icon fa fa-check" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-10">
+                                <h4 class="explore-scandic-heading uppercase">Not only your home:</h4>
+                                <p>Meetings and conference rooms are available for whatever your need is, hybrid meetings spaces or work space or even conference venues.</p>
+                                <p>All our Scandic hotels have a bar and resutarant, and Scandic welcomes all the guests, living in Scandic or coming just for a beer.</p>
+                                <p>And last but not least, Wellness and Spa, only for our Scandic guests.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-10 offset-1 offset-sm-0 col-sm-4 col-md-4">
+                        <div class="row">
+                            <div class="col-2">
+                                <i class="explore-scandic-icon fa fa-check" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-10">
+                                <h4 class="explore-scandic-heading uppercase">Our offers </h4>
+                                <p> 
+                                    For Scandic members, there will always be reduced prices and offers as well as 10% discount of food on weekends.
+                                </p>
+                                <p>Youth (between 18 and 25 years old) gets a 25% off when staying in Scandic.</p>
+                                <p>Seniors also have their discounts, 40% off on Sundays. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container-fluid">
+        <div class="row row-table scandic-office-table">
+            <div class="col-md-8 scandic-office section-column">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="section-heading uppercase">Our head offices:</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div class="row">
+                                <h4 class="scandic-office-heading uppercase">Sweden (Group Head Office) </h4>
+                                <p>
+                                    Visiting address: Sveavägen 167, Stockholm, Sweden
+                                    Postal address: Box 6197, 102 33 Stockholm, Sweden
+                                </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div class="row">
+                                <h4 class="scandic-office-heading uppercase">Denmark</h4>
+                                <p>
+                                    Visiting address: Nansensgade 19, 7, Copenhagen, Denmark
+                                    Postal address: Nansensgade 19, 7, DK-1366 København K, Denmark
+                                </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div class="row">
+                                <h4 class="scandic-office-heading uppercase">Finland</h4>
+                                <p>
+                                    Visiting address: Revontulenkuja 1, Espoo, Finland
+                                    Postal address: Revontulenkuja 1, FI-02100 Espoo, Finland
+                                </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div class="row">
+                                <h4 class="scandic-office-heading uppercase">Norway</h4>
+                                <p>
+                                    Visiting address: Brynsalléen 2, Oslo, Norway
+                                    Postal address: Postboks 493, Skøyen, NO-0213 Oslo, Norway
+                                </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div class="row">
+                                <h4 class="scandic-office-heading uppercase">Germany</h4>
+                                <p>
+                                    Visiting address: Gabriele-Tergit-Promenade 19, Berlin, Germany
+                                    Postal address: Gabriele-Tergit-Promenade 19, DE-10963 Berlin, Germany
+                                </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="map"></div>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvKtF43f58ZR_bb2izLJIz-vKxztJ9jdk&libraries=places&callback=initMap"></script>
+    </section>
+    
+    <footer class="container-fluid">
+        <div id="footer-details" class="row">
+            <div class="col-sm-6">
+                <h5 class="uppercase general-sub">Find us on social media</h5>
+                <ul class="list-inline  social-links">
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/Scandic/" target="_blank">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                            <span class="sr-only">Facebook</span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a target="_blank" href="https://twitter.com/scandicglobal">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                            <span class="sr-only">Twitter</span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a target="_blank" href="https://www.instagram.com/scandichotels/">
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                            <span class="sr-only">Instagram</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+    </footer>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+<script type="module" src="./assets/js/maps.js"></script>
+<script>
+    function initMap() {
+        let sweden = { lat: 59.349930, lng: 18.045120 };
+        let map = new google.maps.Map(
+            document.getElementById('map'), { zoom: 8, center: sweden }
+        );
+        let marker = new google.maps.Marker({ position: sweden, map: map });}
+    </script>
+</body>
+</html>
