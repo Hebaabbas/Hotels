@@ -65,9 +65,23 @@ class Reaction(base):
     post_id = Column(Integer, ForeignKey('posts.id'))
     user_id = Column(Integer, ForeignKey('users.id'))
     is_thumb_up = Column(Boolean)
-                    
+
 Session = sessionmaker(db)
 session = Session()
 
 # Creating the database using declarative_base subclass
 base.metadata.create_all(db)
+
+# Creating records in our tables
+user1 = User(
+    username="Heba1996",
+    email="heba@example.com",
+    firstname="Heba",
+    lastname="Abbas",
+    is_staff=True,
+    is_supervisor=True,
+    password="0000"  
+)
+
+
+session.add(user1)
