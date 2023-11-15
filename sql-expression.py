@@ -57,7 +57,14 @@ comments_table = Table(
     Column("content", Text),
     Column("comment_date", DateTime, default="CURRENT_TIMESTAMP")
 )
-
+# Define the "reactions" table
+reactions_table = Table(
+    "reactions", meta,
+    Column("id", Integer, primary_key=True),
+    Column("post_id", Integer, ForeignKey("posts.id")),
+    Column("user_id", Integer, ForeignKey("users.id")),
+    Column("is_thumb_up", Boolean)
+)
 # Making the connection
 with db.connect() as connection:
     # Example Query - Select all users
