@@ -26,7 +26,19 @@ class Hotel(base):
     city = Column(String(100))
     average_rating = Column(Float)
 
-    
+# Class-based model for the "reviews" table
+class Review(base):
+    __tablename__ = "reviews"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    hotel_id = Column(Integer, ForeignKey('hotels.id'))
+    review_date = Column(DateTime)
+    content = Column(Text)
+    room_type = Column(String(100))
+    duration = Column(Integer)
+    spa = Column(Boolean)
+    breakfast = Column(Boolean)
+        
 Session = sessionmaker(db)
 session = Session()
 
