@@ -38,7 +38,18 @@ class Review(base):
     duration = Column(Integer)
     spa = Column(Boolean)
     breakfast = Column(Boolean)
-        
+
+# Class-based model for the "posts" table
+class Post(base):
+    __tablename__ = "posts"
+    id = Column(Integer, primary_key=True)
+    title = Column(String(100))
+    content = Column(Text)
+    post_date = Column(DateTime)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    hotel_id = Column(Integer, ForeignKey('hotels.id'))
+    
+            
 Session = sessionmaker(db)
 session = Session()
 
