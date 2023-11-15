@@ -38,6 +38,17 @@ reviews_table = Table(
     Column("spa", Boolean),
     Column("breakfast", Boolean)
 )
+# Define the "posts" table
+posts_table = Table(
+    "posts", meta,
+    Column("id", Integer, primary_key=True),
+    Column("title", String(100)),
+    Column("content", Text),
+    Column("post_date", DateTime, default="CURRENT_TIMESTAMP"),
+    Column("user_id", Integer, ForeignKey("users.id")),
+    Column("hotel_id", Integer, ForeignKey("hotels.id"))
+)
+
 
 # Making the connection
 with db.connect() as connection:
