@@ -74,3 +74,33 @@ session = Session()
 
 # Creating the database using declarative_base subclass
 base.metadata.create_all(db)
+
+# Query 1 - Select all records from the "users" table
+# users = session.query(User)
+# for user in users:
+    print(user.id, user.username, user.email, sep=" | ")
+
+# Query 2 - Select only the "username" and "email" columns from the "users" table
+# users = session.query(User.username, User.email)
+#  for user in users:
+#    print(user.username, user.email)
+
+# Query 3 - Select a specific user by username
+# user = session.query(User).filter_by(username="specific_username").first()
+# if user:
+#     print(user.id, user.username, user.email, sep=" | ")
+
+# Query 4 - Select all hotels in a specific city
+# hotels = session.query(Hotel).filter_by(city="specific_city")
+# for hotel in hotels:
+#     print(hotel.id, hotel.name, hotel.country, hotel.city, hotel.average_rating, sep=" | ")
+
+# Query 5 - Select all reviews for a specific hotel
+# reviews = session.query(Review).filter_by(hotel_id=specific_hotel_id)
+# for review in reviews:
+#     print(review.id, review.user_id, review.hotel_id, review.content, sep=" | ")
+
+# Query 6 - Select all posts made by a specific user
+# posts = session.query(Post).filter_by(user_id=specific_user_id)
+# for post in posts:
+#     print(post.id, post.title, post.content, post.user_id, post.hotel_id, sep=" | ")
