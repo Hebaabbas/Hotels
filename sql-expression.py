@@ -16,6 +16,28 @@ users_table = Table(
     Column("is_supervisor", Boolean, default=False),
     Column("password", String(255))
 )
+# Define the "hotels" table
+hotels_table = Table(
+    "hotels", meta,
+    Column("id", Integer, primary_key=True),
+    Column("name", String(100), nullable=False),
+    Column("country", String(100)),
+    Column("city", String(100)),
+    Column("average_rating", Float(precision=2, scale=1))
+)
+# Define the "reviews" table
+reviews_table = Table(
+    "reviews", meta,
+    Column("id", Integer, primary_key=True),
+    Column("user_id", Integer, ForeignKey("users.id")),
+    Column("hotel_id", Integer, ForeignKey("hotels.id")),
+    Column("review_date", DateTime, default="CURRENT_TIMESTAMP"),
+    Column("content", Text),
+    Column("room_type", String(100)),
+    Column("duration", Integer),
+    Column("spa", Boolean),
+    Column("breakfast", Boolean)
+)
 
 # Making the connection
 with db.connect() as connection:
