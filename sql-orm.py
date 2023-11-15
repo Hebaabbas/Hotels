@@ -2,7 +2,6 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean, Float, D
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Assuming the database is "data"
 db = create_engine("postgresql:///data")
 base = declarative_base()
 

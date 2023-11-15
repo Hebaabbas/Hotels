@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, Table, Column, Integer, String, Boolean, Text, Float, DateTime, MetaData, ForeignKey
 
-# Assuming the database is "data"
 db = create_engine("postgresql:///data")
 meta = MetaData(db)
 
