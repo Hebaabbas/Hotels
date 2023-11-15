@@ -57,8 +57,15 @@ class Comment(base):
     user_id = Column(Integer, ForeignKey('users.id'))
     content = Column(Text)
     comment_date = Column(DateTime)
-    
-                
+
+# Class-based model for the "reactions" table
+class Reaction(base):
+    __tablename__ = "reactions"
+    id = Column(Integer, primary_key=True)
+    post_id = Column(Integer, ForeignKey('posts.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
+    is_thumb_up = Column(Boolean)
+                    
 Session = sessionmaker(db)
 session = Session()
 
