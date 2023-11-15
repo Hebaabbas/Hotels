@@ -50,6 +50,15 @@ class Post(base):
     user_id = Column(Integer, ForeignKey('users.id'))
     hotel_id = Column(Integer, ForeignKey('hotels.id'))
 
+# Class-based model for the "comments" table
+class Comment(base):
+    __tablename__ = "comments"
+    id = Column(Integer, primary_key=True)
+    post_id = Column(Integer, ForeignKey('posts.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
+    content = Column(Text)
+    comment_date = Column(DateTime)
+    
 # Create a new instance of sessionmaker, then point to our engine (the db)
 Session = sessionmaker(db)
 # Opens an actual session by calling the Session() subclass defined above
