@@ -17,6 +17,16 @@ class User(base):
     is_supervisor = Column(Boolean)
     password = Column(String(255))
 
+# Class-based model for the "hotels" table
+class Hotel(base):
+    __tablename__ = "hotels"
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100))
+    country = Column(String(100))
+    city = Column(String(100))
+    average_rating = Column(Float)
+
+    
 Session = sessionmaker(db)
 session = Session()
 
