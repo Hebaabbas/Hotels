@@ -48,7 +48,15 @@ posts_table = Table(
     Column("user_id", Integer, ForeignKey("users.id")),
     Column("hotel_id", Integer, ForeignKey("hotels.id"))
 )
-
+# Define the "comments" table
+comments_table = Table(
+    "comments", meta,
+    Column("id", Integer, primary_key=True),
+    Column("post_id", Integer, ForeignKey("posts.id")),
+    Column("user_id", Integer, ForeignKey("users.id")),
+    Column("content", Text),
+    Column("comment_date", DateTime, default="CURRENT_TIMESTAMP")
+)
 
 # Making the connection
 with db.connect() as connection:
