@@ -48,8 +48,17 @@ class Post(base):
     post_date = Column(DateTime)
     user_id = Column(Integer, ForeignKey('users.id'))
     hotel_id = Column(Integer, ForeignKey('hotels.id'))
+
+# Class-based model for the "comments" table
+class Comment(base):
+    __tablename__ = "comments"
+    id = Column(Integer, primary_key=True)
+    post_id = Column(Integer, ForeignKey('posts.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
+    content = Column(Text)
+    comment_date = Column(DateTime)
     
-            
+                
 Session = sessionmaker(db)
 session = Session()
 
