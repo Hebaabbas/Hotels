@@ -67,8 +67,21 @@ reactions_table = Table(
 )
 # Making the connection
 with db.connect() as connection:
-    # Example Query - Select all users
-    select_query = users_table.select()
+    # Query 1 - Select all records from the "users" table
+    # select_query = users_table.select()
+
+    # Query 2 - Select only the "username" and "email" columns from the "users" table
+    # select_query = users_table.select().with_only_columns([users_table.c.username, users_table.c.email])
+
+    # Query 3 - Select a specific user by username
+    # select_query = users_table.select().where(users_table.c.username == "specific_username")
+
+    # Query 4 - Select all hotels in a specific city
+    # select_query = hotels_table.select().where(hotels_table.c.city == "specific_city")
+
+    # Query 5 - Select all reviews for a specific hotel
+    # select_query = reviews_table.select().where(reviews_table.c.hotel_id == specific_hotel_id)
+
 
     # Execute the query and print results
     results = connection.execute(select_query)
