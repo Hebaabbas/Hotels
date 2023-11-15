@@ -82,6 +82,15 @@ user1 = User(
     is_supervisor=True,
     password="0000"  
 )
-
+user2 = User(
+    username="Tom1",
+    email="tom@example.com",
+    firstname="Tom",
+    lastname="Tommy",
+    is_staff=False,
+    is_supervisor=False,
+    password="1111"  
+)
 
 session.add(user1)
+session.add(user2)
