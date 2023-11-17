@@ -41,6 +41,32 @@
             </div>
         </div>
     </header>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Posts</h2>
+                    <!-- Form to Add a Post -->
+                    <form action="/add_post" method="post">
+                        <div class="form-group">
+                            <label for="postContent">New Post:</label>
+                            <textarea class="form-control" id="postContent" name="content" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Post</button>
+                    </form>
+                
+                    <!-- Loop through posts here -->
+                    <div class="post">
+                        <p>Members posts: </p>
+                        </form>
+                        <button class="btn btn-success">👍</button>
+                        <button class="btn btn-danger">👎</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
     <footer class="container-fluid">
         <div id="footer-details" class="row">
             <div class="col-sm-6">
