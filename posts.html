@@ -63,6 +63,23 @@
                         <button class="btn btn-danger">👎</button>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <h2>Reviews</h2>
+                    <!-- Form to Add a Review -->
+                    <form action="/add_review" method="post">
+                        <div class="form-group">
+                            <label for="reviewContent">New Review:</label>
+                            <textarea class="form-control" id="reviewContent" name="content" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Review</button>
+                    </form>
+                    <!-- Loop through reviews here -->
+                    <div class="review">
+                        <p>Members reviews:</p>
+                        <form action="/add_comment_to_review" method="post">
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
