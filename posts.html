@@ -72,7 +72,33 @@
                     <!-- Form to Add a Review -->
                     <form action="/add_review" method="post">
                         <div class="form-group">
-                            <label for="reviewContent" class="form-label">New Review:</label>
+                            <label for="hotelName" class="form-label">Hotel Name:</label>
+                            <input type="text" class="form-control" id="hotelName" name="hotelName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="roomType" class="form-label">Room Type:</label>
+                            <input type="text" class="form-control" id="roomType" name="roomType" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="spaIncluded">Spa Included:</label>
+                            <select class="form-control" id="spaIncluded" name="spaIncluded">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="breakfastIncluded">Breakfast Included:</label>
+                            <select class="form-control" id="breakfastIncluded" name="breakfastIncluded">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="durationStay" class="form-label">Duration of Stay (in days):</label>
+                            <input type="number" class="form-control" id="durationStay" name="durationStay" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewContent" class="form-label">Your Review:</label>
                             <textarea class="form-control custom-textarea" id="reviewContent" name="content" required></textarea>
                         </div>
                         <button type="submit" class="btn custom-button">Add Review</button>
@@ -80,8 +106,12 @@
                     <!-- Loop through reviews here -->
                     <div class="review">
                         <p>Members reviews:</p>
-                        <form action="/add_comment_to_review" method="post">
-                        </form>
+                        <!-- Existing reviews displayed here -->
+                        <!-- Example of a review with a delete button -->
+                        <div class="review-item">
+                            <!-- Review Content -->
+                            <button type="button" class="btn btn-danger">Delete Review</button>
+                        </div>
                     </div>
                 </div>
             </div>
