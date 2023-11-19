@@ -45,14 +45,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h2>Posts</h2>
+                    <h2 class="section-heading">Posts</h2>
                     <!-- Form to Add a Post -->
                     <form action="/add_post" method="post">
                         <div class="form-group">
-                            <label for="postContent">New Post:</label>
+                            <label for="postContent" class="form-label">New Post:</label>
                             <textarea class="form-control" id="postContent" name="content" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add Post</button>
+                        <button type="submit" class="btn custom-button">Add a post</button>
                     </form>
                 
                     <!-- Loop through posts here -->
@@ -60,13 +60,12 @@
                         <p>Members posts: </p>
                         <!-- Form for thumbs up/down or comments -->
                         <form action="/add_comment_to_post" method="post">
-                            <input type="text" name="comment" placeholder="Add a comment...">
-                            <button type="submit" class="btn btn-secondary">Comment</button>
-                            <button type="button" class="btn btn-success">👍</button>
-                            <button type="button" class="btn btn-danger">👎</button>
+                            <input type="text" name="comment" class="form-control custom-input" placeholder="Add a comment">
+                            <button type="submit" class="btn custom-button">Comment</button>
+                            <button type="button" class="btn custom-button">👍</button>
+                            <button type="button" class="btn custom-button">👎</button>
                         </form>
                     </div>
-
                 </div>
                 <div class="col-md-6">
                     <h2>Reviews</h2>
