@@ -2,6 +2,7 @@
 
 body{
     background-color: #f1dbdb;
+    font-family: "Lora", sans-serif;
 }
 
 .bg-color-brand-description {
@@ -22,7 +23,6 @@ body{
     background-color: #fcc4c4;
 }
 
-
 .row-table {
     display: table;
 }
@@ -31,18 +31,14 @@ body{
     padding: 0 20px 20px;
     float: none;
 }
-.scandic-office-table{
-    margin-right:0;
-    margin-left: 0;
-    font-family: "Lora", sans-serif;
-}
-
-.section-heading {
+.section-heading, .scandic-office-heading, .explore-scandic-heading {
     font-family: "Lora", sans-serif;
     font-weight: 300;
     margin-top: 45px;
     margin-bottom: 45px;
+    text-transform: uppercase;
 }
+
 h1,h2,h3,h4{
     margin: 0;
     font-family: "Lora", sans-serif;
@@ -133,6 +129,7 @@ header {
 .general-sub{
     font-weight: 300;
 }
+
 footer {
     background-color: #472812;
     color: #e3b6ba;
@@ -163,17 +160,9 @@ footer {
 #footer-details {
     padding: 20px;
 }
-.explore-scandic-icon {
+.explore-scandic-icon, .office-icon {
     font-size: 30px;
     color: #472812;
-}
-
-.explore-scandic-heading {
-    margin-bottom: 20px;
-}
-
-.scandic-office-heading {
-    margin-bottom: 20px;
 }
 
 .contact-heading{
