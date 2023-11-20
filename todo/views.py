@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views import generic
-from .models import Post, Hotel
-from .models import Review
+from .models import Post, Hotel, Review
 from django.db.models import Count, Q
+
 def get_index(request):
     return render(request, 'todo/index.html')
 
@@ -17,8 +17,8 @@ class PostList(generic.ListView):
         context['hotels'] = Hotel.objects.all()
         return context
 
-        def get_queryset(self):
-            return Post.objects.annotate(
+    def get_queryset(self):
+        return Post.objects.annotate(
             num_thumbs_up=Count('reactions', filter=Q(reactions__is_thumb_up=True)),
             num_thumbs_down=Count('reactions', filter=Q(reactions__is_thumb_up=False))
         ).order_by('-post_date')
