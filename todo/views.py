@@ -6,6 +6,19 @@ from django.db.models import Count, Q
 def get_index(request):
     return render(request, 'todo/index.html')
 
+
+def contact_view(request):
+    return render(request, 'todo/contact.html')
+
+
+def posts_view(request):
+    return render(request, 'todo/posts.html')
+
+
+def sign_in_view(request):
+    return render(request, 'todo/sign_in.html')
+
+
 class PostList(generic.ListView):
     model = Post
     queryset = Post.objects.all().order_by("-post_date")
