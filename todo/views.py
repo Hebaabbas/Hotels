@@ -16,13 +16,13 @@ def posts_view(request):
 
 
 def sign_in_view(request):
-    return render(request, 'todo/sign_in.html')
+    return render(request, 'todo/signIn.html')
 
 
 class PostList(generic.ListView):
     model = Post
+    template_name = "todo/posts.html"  
     queryset = Post.objects.all().order_by("-post_date")
-    template_name = "posts.html"
     paginate_by = 5
 
     def get_context_data(self, **kwargs):
@@ -39,7 +39,7 @@ class PostList(generic.ListView):
 class ReviewList(generic.ListView):
     model = Review
     queryset = Review.objects.all().order_by("-review_date")
-    template_name = "posts.html"  
+    template_name = "todo/reviews.html"  
     paginate_by = 5
 
     def get_context_data(self, **kwargs):
