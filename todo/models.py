@@ -18,7 +18,13 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     image = CloudinaryField('image', default='placeholder')
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, null=True)
+
+    def number_of_thumbs_up(self):
+        return self.reactions.filter(is_thumb_up=True).count()
+
+    def number_of_thumbs_down(self):
+        return self.reactions.filter(is_thumb_up=False).count()
 
 
     def __str__(self):
