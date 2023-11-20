@@ -31,7 +31,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['scandic-hotels.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = [
+    'scandic-hotels.herokuapp.com', 
+    'localhost', 
+    '8000-hebaabbas-hotels-yfhj6890j9f.ws-eu106.gitpod.io'
+]
 
 
 # Application definition
