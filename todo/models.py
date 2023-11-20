@@ -18,6 +18,8 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     image = CloudinaryField('image', default='placeholder')
+    slug = models.SlugField(unique=True)
+
 
     def __str__(self):
         return self.title
