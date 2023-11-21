@@ -52,6 +52,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <h2 class="section-heading">Posts</h2>
+                    {% if user.is_authenticated %}
                     <!-- Form to Add a Post -->
                     <form action="/add_post" method="post" enctype="multipart/form-data">
                         <div class="form-group">
@@ -68,6 +69,9 @@
                         </div>
                         <button type="submit" class="btn custom-button">Add a post</button>
                     </form>
+                    {% else %}
+                        <p>You must be logged in to post.</p>
+                    {% endif %}
 
                     <!-- Loop through posts here -->
                     {% for post in post_list %}
