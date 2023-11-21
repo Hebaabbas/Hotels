@@ -102,6 +102,7 @@
 
                     <div class="post">
                         <p>Members posts: </p>
+                        {% if user.is_authenticated %}
                         <!-- Form for thumbs up/down or comments -->
                         <form action="/add_comment_to_post" method="post">
                             <input type="text" name="comment" class="form-control custom-input" placeholder="Add a comment">
@@ -109,6 +110,9 @@
                             <button type="button" class="btn custom-button">👍</button>
                             <button type="button" class="btn custom-button">👎</button>
                         </form>
+                        {% else %}
+                        <p>You must be logged in to comment.</p>
+                        {% endif %}
                     </div>
                     </div>
 
