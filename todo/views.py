@@ -1,7 +1,14 @@
-from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
 from django.views import generic
 from .models import Post, Hotel, Review
 from django.db.models import Count, Q
+from django.contrib import messages
+from todo import views
+from .forms import CustomUserCreationForm
+from django.contrib.auth.decorators import login_required
+
 
 def get_index(request):
     return render(request, 'todo/index.html')
@@ -12,11 +19,38 @@ def contact_view(request):
 
 
 def posts_view(request):
-    return render(request, 'todo/posts.html')
-
+    context = {
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+    }
+    return render(request, 'todo/posts.html', context)
 
 def sign_in_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('post_list')  
+        else:
+            messages.error(request, 'Invalid username or password.')
+
     return render(request, 'todo/signIn.html')
+
+
+def sign_up_view(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('post_list')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'todo/signIn.html', {'form': form})
+
 
 
 class PostList(generic.ListView):
@@ -46,3 +80,4 @@ class ReviewList(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['hotels'] = Hotel.objects.all()
         return context
+

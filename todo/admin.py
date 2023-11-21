@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
 from .models import Hotel, Post, Comment, Reaction, Review
 from django_summernote.admin import SummernoteModelAdmin
 
