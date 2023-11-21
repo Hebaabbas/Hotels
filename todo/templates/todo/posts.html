@@ -120,6 +120,7 @@
 
                 <div class="col-md-6">
                     <h2 class="section-heading">Reviews</h2>
+                    {% if user.is_authenticated %}
                     <!-- Form to Add a Review -->
                     <form action="/add_review" method="post">
                         <div class="form-group">
@@ -154,6 +155,9 @@
                         </div>
                         <button type="submit" class="btn custom-button">Add Review</button>
                     </form>
+                    {% else %}
+                    <p>You must be logged in to post reviews.</p>
+                    {% endif %}
                     <!-- Loop through reviews here -->
                     {% for review in review_list %}
                         <div class="review">
