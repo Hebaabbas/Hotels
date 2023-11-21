@@ -36,7 +36,11 @@
                                 <a href="{% url 'post_list' %}"  class="hvr-sweep-to-right"><i class="fa fa-book" aria-hidden="true"></i><span> Posts & Reviews</span></a>
                             </li>
                             <li class="col-6 col-sm-3 ui-menu-color-signIn list-inline-item navitem">
-                                <a href="{% url 'signIn' %}" class="hvr-sweep-to-right"><i class="fa fa-sign-in" aria-hidden="true"></i><span> Sign in/out</span></a>
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'sign_out' %}" class="hvr-sweep-to-right"><i class="fa fa-sign-out" aria-hidden="true"></i><span> Sign Out</span></a>
+                                {% else %}
+                                    <a href="{% url 'signIn' %}" class="hvr-sweep-to-right"><i class="fa fa-sign-in" aria-hidden="true"></i><span> Sign In</span></a>
+                                {% endif %}
                             </li>
                         </ul>
                     </div>
