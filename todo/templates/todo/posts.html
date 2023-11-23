@@ -59,6 +59,7 @@
                         <div class="form-group">
                             <label for="hotelName">Hotel Name:</label>
                             <select name="hotelName" id="hotelName" class="form-control">
+                                <option value="" selected>Select a Hotel</option>
                                 {% for hotel in hotels %}
                                     <option value="{{ hotel.id }}">{{ hotel.name }}</option>
                                 {% endfor %}
@@ -137,10 +138,12 @@
                         <div class="form-group">
                             <label for="hotelNameReview" class="form-label">Hotel Name:</label>
                             <select name="hotelName" id="hotelNameReview" class="form-control">
+                                <option value="" selected>Select a Hotel</option>
                                 {% for hotel in hotels %}
                                     <option value="{{ hotel.id }}">{{ hotel.name }}</option>
                                 {% endfor %}
                             </select>
+                            
                         </div>
                         <div class="form-group">
                             <label for="roomType" class="form-label">Room Type:</label>

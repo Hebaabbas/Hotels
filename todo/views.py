@@ -27,16 +27,25 @@ def contact_view(request):
 
 
 def posts_view(request):
-    hotels = Hotel.objects.all() 
-    posts = Post.objects.all() 
+    hotels = Hotel.objects.all()   
+    posts = Post.objects.all()
+
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        first_name = request.user.first_name
+        last_name = request.user.last_name
+    else:
+        first_name = ''
+        last_name = ''
+
     context = {
         'hotels': hotels,
         'posts': posts,
-        'first_name': request.user.first_name,
-        'last_name': request.user.last_name,    
+        'first_name': first_name,
+        'last_name': last_name,    
     }
     return render(request, 'todo/posts.html', context)
-
+     
 def sign_in_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
