@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.auth.models import User
 from .models import Hotel, Post, Comment, Reaction, Review
 from django_summernote.admin import SummernoteModelAdmin
 
@@ -10,7 +9,6 @@ class PostAdmin(SummernoteModelAdmin):
     list_filter = ('post_date', 'user')
     prepopulated_fields = {'slug': ('title',)}
     summernote_fields = ('content',)
-
 
 @admin.register(Hotel)
 class HotelAdmin(admin.ModelAdmin):

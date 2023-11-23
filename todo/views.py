@@ -2,12 +2,20 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.views import generic
-from .models import Post, Hotel, Review
+from .models import Post, Hotel, Review, Comment, Reaction 
 from django.db.models import Count, Q
 from django.contrib import messages
 from todo import views
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
+from .forms import PostForm
+
+def your_view_function(request):
+    hotels = Hotel.objects.all()  
+    context = {
+        'hotels': hotels,
+    }
+    return render(request, 'posts.html', context)
 
 
 def get_index(request):
@@ -19,9 +27,13 @@ def contact_view(request):
 
 
 def posts_view(request):
+    hotels = Hotel.objects.all() 
+    posts = Post.objects.all() 
     context = {
+        'hotels': hotels,
+        'posts': posts,
         'first_name': request.user.first_name,
-        'last_name': request.user.last_name,
+        'last_name': request.user.last_name,    
     }
     return render(request, 'todo/posts.html', context)
 
@@ -61,7 +73,9 @@ class PostList(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['hotels'] = Hotel.objects.all()
+        context['comments'] = Comment.objects.all()
+        context['reactions'] = Reaction.objects.all()
+        context['reviews'] = Review.objects.all()
         return context
 
     def get_queryset(self):
@@ -80,4 +94,32 @@ class ReviewList(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['hotels'] = Hotel.objects.all()
         return context
+
+@login_required
+def add_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            selected_hotel_id = request.POST.get('hotel') 
+            post.hotel = Hotel.objects.get(id=selected_hotel_id)  
+            post.save()
+            messages.success(request, 'Your post has been successfully added!')
+            return redirect('post_list')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PostForm()
+
+    return render(request, 'todo/posts.html', {'form': form})
+
+
+@login_required
+def add_comment(request, post_id):
+    if request.method == 'POST':
+        post = get_object_or_404(Post, id=post_id)
+        comment_content = request.POST.get('comment')
+        Comment.objects.create(user=request.user, post=post, content=comment_content)
+        return redirect('post_list')
 

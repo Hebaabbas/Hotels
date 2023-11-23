@@ -8,6 +8,9 @@ class Hotel(models.Model):
     city = models.CharField(max_length=100)
     average_rating = models.FloatField()
 
+    class Meta:
+        db_table = 'hotels'
+
     def __str__(self):
         return self.name
 
