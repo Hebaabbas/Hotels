@@ -20,15 +20,17 @@ class Post(models.Model):
     post_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
-    image = CloudinaryField('image', default='placeholder')
+    image = models.ImageField(upload_to='post_images/', null=True, blank=True)
     slug = models.SlugField(unique=True, null=True)
+
+    class Meta:
+        db_table = 'posts'
 
     def number_of_thumbs_up(self):
         return self.reactions.filter(is_thumb_up=True).count()
 
     def number_of_thumbs_down(self):
         return self.reactions.filter(is_thumb_up=False).count()
-
 
     def __str__(self):
         return self.title
@@ -38,11 +40,17 @@ class Reaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_thumb_up = models.BooleanField(default=True)
 
+    class Meta:
+        db_table = 'reactions'
+
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     comment_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'comments'
 
     def __str__(self):
         return f"Comment by {self.user.username} on {self.post.title}"
@@ -57,6 +65,8 @@ class Review(models.Model):
     spa = models.BooleanField(default=False)
     breakfast = models.BooleanField(default=False)
 
+    class Meta:
+        db_table = 'reviews'
+
     def __str__(self):
         return f"Review by {self.user.username} for {self.hotel.name}"
-

@@ -101,9 +101,11 @@ def add_post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.user = request.user
-            selected_hotel_id = request.POST.get('hotel') 
-            post.hotel = Hotel.objects.get(id=selected_hotel_id)  
+            post.user = request.user  # Assigns the logged-in user to the post
+            
+            # Debug print to check the user ID
+            print(f"User ID: {request.user.id}")
+
             post.save()
             messages.success(request, 'Your post has been successfully added!')
             return redirect('post_list')
@@ -111,7 +113,7 @@ def add_post(request):
             messages.error(request, 'Please correct the error below.')
     else:
         form = PostForm()
-
+    
     return render(request, 'todo/posts.html', {'form': form})
 
 
@@ -120,6 +122,10 @@ def add_comment(request, post_id):
     if request.method == 'POST':
         post = get_object_or_404(Post, id=post_id)
         comment_content = request.POST.get('comment')
-        Comment.objects.create(user=request.user, post=post, content=comment_content)
-        return redirect('post_list')
+        if comment_content:
+            Comment.objects.create(user=request.user, post=post, content=comment_content)
+            messages.success(request, 'Comment added successfully!')
+        else:
+            messages.error(request, 'Comment cannot be empty.')
+    return redirect('post_list')
 

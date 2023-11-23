@@ -14,7 +14,7 @@
 <body>
     <header>
         <div class="row no-gutters">
-            <a href ="index.html" class="col-md-3 logo">
+            <a href="{% url 'home' %}" class="col-md-3 logo">
             </a>
             <div class="col-md-9">
                 <div class="row no-gutters bg-color-brand-description">
@@ -89,18 +89,25 @@
                                 <h2 class="card-title">{{ post.title }}</h2>
                                 <p class="card-text">{{ post.content }}</p>
                                 <hr />
+                                <!-- Comments for each post -->
                                 {% for comment in post.comments.all %}
                                     <div class="comment">
                                         <p>{{ comment.user.username }}: {{ comment.content }}</p>
                                     </div>
                                 {% endfor %}
+                                <!-- Add a comment form -->
+                                <form action="{% url 'add_comment' post.id %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="text" name="comment" class="form-control custom-input" placeholder="Add a comment">
+                                    <button type="submit" class="btn custom-button">Comment</button>
+                                </form>
                             </div>
                         </div>
-                    </div>
-                    {% if forloop.counter|divisibleby:3 %}
-                        </div><div class="row">
-                    {% endif %}
-                {% endfor %}
+                        </div>
+                        {% if forloop.counter|divisibleby:3 %}
+                            </div><div class="row">
+                        {% endif %}
+                    {% endfor %}
                 
 
                     <div class="post">
@@ -126,9 +133,14 @@
                     {% if user.is_authenticated %}
                     <!-- Form to Add a Review -->
                     <form action="/add_review" method="post">
+                        {% csrf_token %}
                         <div class="form-group">
-                            <label for="hotelName" class="form-label">Hotel Name:</label>
-                            <input type="text" class="form-control" id="hotelName" name="hotelName" required>
+                            <label for="hotelNameReview" class="form-label">Hotel Name:</label>
+                            <select name="hotelName" id="hotelNameReview" class="form-control">
+                                {% for hotel in hotels %}
+                                    <option value="{{ hotel.id }}">{{ hotel.name }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="roomType" class="form-label">Room Type:</label>

@@ -15,5 +15,6 @@ urlpatterns = [
     path('todo/posts/', posts_view, name='post_list'),
 
 
+
 ]
 
