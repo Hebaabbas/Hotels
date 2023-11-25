@@ -1,14 +1,22 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from .models import Post, Hotel, Review, Comment, Reaction 
 from django.db.models import Count, Q
 from django.contrib import messages
 from todo import views
-from .forms import CustomUserCreationForm
+from .forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
+from .forms import CustomUserCreationForm
+from todo.models import CustomUser
+from .forms import ReviewForm
+from django.shortcuts import get_object_or_404
+from django.http import Http404  
+
+
+
 
 def your_view_function(request):
     hotels = Hotel.objects.all()  
@@ -32,17 +40,17 @@ def posts_view(request):
 
     # Check if the user is authenticated
     if request.user.is_authenticated:
-        first_name = request.user.first_name
-        last_name = request.user.last_name
+        firstname = request.user.firstname
+        lastname = request.user.lastname
     else:
-        first_name = ''
-        last_name = ''
+        firstname = ''
+        lastname = ''
 
     context = {
         'hotels': hotels,
         'posts': posts,
-        'first_name': first_name,
-        'last_name': last_name,    
+        'firstname': firstname,
+        'lastname': lastname,    
     }
     return render(request, 'todo/posts.html', context)
      
@@ -73,7 +81,6 @@ def sign_up_view(request):
     return render(request, 'todo/signIn.html', {'form': form})
 
 
-
 class PostList(generic.ListView):
     model = Post
     template_name = "todo/posts.html"  
@@ -96,7 +103,7 @@ class PostList(generic.ListView):
 class ReviewList(generic.ListView):
     model = Review
     queryset = Review.objects.all().order_by("-review_date")
-    template_name = "todo/reviews.html"  
+    template_name = "todo/posts.html"  
     paginate_by = 5
 
     def get_context_data(self, **kwargs):
@@ -137,4 +144,24 @@ def add_comment(request, post_id):
         else:
             messages.error(request, 'Comment cannot be empty.')
     return redirect('post_list')
+
+
+def add_review(request, hotel_id):  # Include 'hotel_id' as a parameter
+    hotel = get_object_or_404(Hotel, pk=hotel_id)
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.hotel = hotel
+            review.save()
+            # Redirect to the hotel detail page or another appropriate view
+            return redirect('hotel_detail', hotel_id=hotel_id)
+    else:
+        # Handle the case where 'hotel_id' is not provided in the URL or form data
+        raise Http404("Hotel not found")
+
+    return render(request, 'posts.html', {'form': form})
+
 

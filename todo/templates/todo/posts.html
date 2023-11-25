@@ -134,7 +134,7 @@
                     <h2 class="section-heading">Reviews</h2>
                     {% if user.is_authenticated %}
                     <!-- Form to Add a Review -->
-                    <form action="/add_review" method="post">
+                    <form action="{% url 'add_review' selected_hotel_id %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="hotelNameReview" class="form-label">Hotel Name:</label>

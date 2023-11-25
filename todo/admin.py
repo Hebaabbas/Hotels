@@ -1,14 +1,29 @@
 from django.contrib import admin
 from .models import Hotel, Post, Comment, Reaction, Review
 from django_summernote.admin import SummernoteModelAdmin
+from django import forms
+from todo.models import CustomUser
+
+
+class PostAdminForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = '__all__'
 
 @admin.register(Post)
 class PostAdmin(SummernoteModelAdmin):
+    form = PostAdminForm
     list_display = ('title', 'post_date', 'user', 'hotel')
     search_fields = ['title', 'content']
     list_filter = ('post_date', 'user')
     prepopulated_fields = {'slug': ('title',)}
     summernote_fields = ('content',)
+
+    def save_model(self, request, obj, form, change):
+        if not obj.user_id:
+            obj.user = request.user
+        super().save_model(request, obj, form, change)
+
 
 @admin.register(Hotel)
 class HotelAdmin(admin.ModelAdmin):
