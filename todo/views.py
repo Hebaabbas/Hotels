@@ -164,4 +164,34 @@ def add_review(request, hotel_id):  # Include 'hotel_id' as a parameter
 
     return render(request, 'posts.html', {'form': form})
 
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if post.user == request.user:  # Check if the logged-in user is the post creator
+        post.delete()
+        messages.success(request, 'Post deleted successfully!')
+    else:
+        messages.error(request, 'You do not have permission to delete this post.')
+    return redirect('post_list')
+
+@login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    if review.user == request.user:
+        review.delete()
+        messages.success(request, 'Review deleted successfully!')
+    else:
+        messages.error(request, 'You do not have permission to delete this review.')
+    return redirect('review_list')  # Redirect to the appropriate view
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if comment.user == request.user:
+        comment.delete()
+        messages.success(request, 'Comment deleted successfully!')
+    else:
+        messages.error(request, 'You do not have permission to delete this comment.')
+    # Redirect to the appropriate view, maybe the post detail view
+    return redirect('post_detail', post_id=comment.post.id)
 
