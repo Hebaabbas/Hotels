@@ -19,6 +19,7 @@ from todo.views import get_index
 from todo.views import sign_in_view
 from django.contrib.auth import views as auth_views
 from todo import views 
+from todo.views import add_review_view
 
 
 urlpatterns = [
@@ -30,4 +31,6 @@ urlpatterns = [
     path('signin/', auth_views.LoginView.as_view(template_name='todo/signIn.html'), name='sign_in'),
     path('signup/', views.sign_up_view, name='signUp'),
     path('signout/', auth_views.LogoutView.as_view(next_page='home'), name='sign_out'),
+    path('add_review/<int:hotel_id>/', add_review_view, name='add_review'),
+
 ]

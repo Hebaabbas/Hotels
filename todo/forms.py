@@ -1,11 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Post, Review
+from .models import Post, Review, Hotel
 from todo.models import CustomUser
 
 
         
 class PostForm(forms.ModelForm):
+    hotel = forms.ModelChoiceField(queryset=Hotel.objects.all(), required=True, label="Hotel")
     class Meta:
         model = Post
         fields = ['title', 'content', 'image', 'hotel'] 

@@ -1,6 +1,7 @@
 from . import views
 from django.urls import path
-from .views import sign_in_view, sign_up_view, posts_view, delete_post, delete_review, delete_comment, add_review
+from .views import sign_in_view, sign_up_view, posts_view, delete_post, delete_review, delete_comment, add_review_view
+
 
 urlpatterns = [
     path('', views.get_index, name='home'),  # Home page
@@ -10,7 +11,7 @@ urlpatterns = [
     path('signin/', sign_in_view, name='signIn'),
     path('signup/', sign_up_view, name='signUp'),
     path('add_post/', views.add_post, name='add_post'),
-    path('todo/add_review/<int:hotel_id>/', views.add_review, name='add_review'),
+    path('add_review/<int:hotel_id>/', add_review_view, name='add_review'),
     path('add_comment/<int:post_id>/', views.add_comment, name='add_comment'),
     path('todo/posts/', posts_view, name='post_list'),
     path('delete_post/<int:post_id>/', delete_post, name='delete_post'),

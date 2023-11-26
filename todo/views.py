@@ -50,7 +50,7 @@ def posts_view(request):
         'hotels': hotels,
         'posts': posts,
         'firstname': firstname,
-        'lastname': lastname,    
+        'lastname': lastname,
     }
     return render(request, 'todo/posts.html', context)
      
@@ -118,10 +118,7 @@ def add_post(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user  # Assigns the logged-in user to the post
-            
-            # Debug print to check the user ID
-            print(f"User ID: {request.user.id}")
-
+            post.hotel = form.cleaned_data['hotel']  # Assigns the selected hotel to the post
             post.save()
             messages.success(request, 'Your post has been successfully added!')
             return redirect('post_list')
@@ -130,8 +127,7 @@ def add_post(request):
     else:
         form = PostForm()
     
-    return render(request, 'todo/posts.html', {'form': form})
-
+    return render(request, 'todo/add_post.html', {'form': form})
 
 @login_required
 def add_comment(request, post_id):
@@ -146,10 +142,9 @@ def add_comment(request, post_id):
     return redirect('post_list')
 
 
-def add_review(request, hotel_id):  # Include 'hotel_id' as a parameter
+def add_review_view(request, hotel_id):
     hotel = get_object_or_404(Hotel, pk=hotel_id)
-
-    if request.method == 'POST':
+    if request.method == "POST":
         form = ReviewForm(request.POST)
         if form.is_valid():
             review = form.save(commit=False)
@@ -162,7 +157,6 @@ def add_review(request, hotel_id):  # Include 'hotel_id' as a parameter
         # Handle the case where 'hotel_id' is not provided in the URL or form data
         raise Http404("Hotel not found")
 
-    return render(request, 'posts.html', {'form': form})
 
 @login_required
 def delete_post(request, post_id):
