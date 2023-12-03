@@ -12,10 +12,7 @@ from .forms import PostForm
 from .forms import CustomUserCreationForm
 from todo.models import CustomUser
 from .forms import ReviewForm
-from django.shortcuts import get_object_or_404
 from django.http import Http404  
-
-
 
 
 def your_view_function(request):
@@ -91,7 +88,6 @@ class PostList(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['comments'] = Comment.objects.all()
         context['reactions'] = Reaction.objects.all()
-        context['reviews'] = Review.objects.all()
         return context
 
     def get_queryset(self):
@@ -104,11 +100,10 @@ class ReviewList(generic.ListView):
     model = Review
     queryset = Review.objects.all().order_by("-review_date")
     template_name = "todo/posts.html"  
-    paginate_by = 5
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['hotels'] = Hotel.objects.all()
         return context
 
 @login_required
@@ -174,9 +169,10 @@ def delete_review(request, review_id):
     if review.user == request.user:
         review.delete()
         messages.success(request, 'Review deleted successfully!')
+        return redirect('review_list')  # Redirect to the review list page
     else:
         messages.error(request, 'You do not have permission to delete this review.')
-    return redirect('review_list')  # Redirect to the appropriate view
+        return redirect('review_list')  # Redirect to the review list page
 
 @login_required
 def delete_comment(request, comment_id):
@@ -187,5 +183,5 @@ def delete_comment(request, comment_id):
     else:
         messages.error(request, 'You do not have permission to delete this comment.')
     # Redirect to the appropriate view, maybe the post detail view
-    return redirect('post_detail', post_id=comment.post.id)
+    return redirect('post_list', post_id=comment.post.id)
 
