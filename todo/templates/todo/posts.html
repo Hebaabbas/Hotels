@@ -12,8 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cheerio/1.0.0/cheerio.min.js"></script>
-    <script src="{% static 'js/posts.js' %}"></script>
-    <script src="{% static 'js/duration.js' %}"></script>
+
 
     <title>Scandic Hotels</title>
 </head>
@@ -62,9 +61,6 @@
                 <h2 class="section-heading">Posts</h2>
                 {% if user.is_authenticated %}
                     <!-- Form to Add a Post -->
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ form.as_p }}
                         <div class="form-group">
                             <label for="hotelName">Hotel Name:</label>
                             <select name="hotelName" id="hotelName" class="form-control">
@@ -74,6 +70,7 @@
                                 {% endfor %}
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label for="postContent" class="form-label">New Post:</label>
                             <textarea class="form-control" id="postContent" name="content" required></textarea>
@@ -82,11 +79,14 @@
                             <label for="postImage" class="form-label">Upload Image:</label>
                             <input type="file" class="form-control-file" id="postImage" name="image">
                         </div>
-                        <button type="submit" class="btn custom-button">Add a post</button>
-                    </form>
-                {% else %}
-                    <p>You must be logged in to post.</p>
-                {% endif %}
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn custom-button">Add a post</button>
+                        </form>
+                    {% else %}
+                        <p>You must be logged in to post.</p>
+                    {% endif %}
 
                 <!-- Loop through posts here -->
                 {% for post in post_list %}
@@ -109,11 +109,11 @@
                                 </div>
                             {% endfor %}
                             <!-- Add a comment form -->
+                            {% if user.is_authenticated %}
                             <form action="{% url 'add_comment' post.id %}" method="post">
                                 {% csrf_token %}
                                 <input type="text" name="comment" class="form-control custom-input" placeholder="Add a comment">
                                 <button type="submit" class="btn custom-button">Comment</button>
-                                {% if user.is_authenticated %}
                                 <button type="button" class="btn custom-button">👍</button>
                                 <button type="button" class="btn custom-button">👎</button>
                                 {% endif %}
@@ -134,6 +134,7 @@
                     <!-- Form to Add a Review -->
                     <form method="post" enctype="multipart/form-data" class="review-form">
                         {% csrf_token %}
+                        <input type="hidden" name="hotel" id="hotel" value="">
                         <div class="form-group">
                             <label for="hotelNameReview" class="form-label">Hotel Name:</label>
                             <select name="hotelName" id="hotelNameReview" class="form-control">
@@ -178,7 +179,7 @@
 
         
                 <!-- Loop through reviews here -->
-                {% for review in review_list %}
+                {% for review in reviews %}
                     <div class="review">
                         <h3>Review for {{ review.hotel.name }}</h3>
                         <p>{{ review.content }}</p>
@@ -219,5 +220,7 @@
                 </ul>
             </div>
     </footer>
+    <script src="{% static 'js/posts.js' %}"></script>
+    <script src="{% static 'js/duration.js' %}"></script>
 </body>
 </html>

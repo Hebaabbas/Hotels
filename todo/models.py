@@ -72,6 +72,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post_images/', null=True, blank=True)
     slug = models.SlugField(unique=True, null=True)
 
+
     class Meta:
         db_table = 'posts'
 

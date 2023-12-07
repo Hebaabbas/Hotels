@@ -33,7 +33,4 @@ urlpatterns = [
     path('posts/', PostList.as_view(), name='post_list'),
     path('posts/<int:post_id>/', PostList.as_view(), name='post_list'),
 
-
-
-
 ]

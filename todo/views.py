@@ -20,7 +20,7 @@ def your_view_function(request):
     context = {
         'hotels': hotels,
     }
-    return render(request, 'posts.html', context)
+    return render(request, 'posts.html', {'hotels': hotels})
 
 
 def get_index(request):
@@ -34,6 +34,8 @@ def contact_view(request):
 def posts_view(request):
     hotels = Hotel.objects.all()   
     posts = Post.objects.all()
+    reviews = Review.objects.all()
+
 
     # Check if the user is authenticated
     if request.user.is_authenticated:
@@ -48,6 +50,7 @@ def posts_view(request):
         'posts': posts,
         'firstname': firstname,
         'lastname': lastname,
+        'reviews': reviews,
     }
     return render(request, 'todo/posts.html', context)
      
@@ -104,16 +107,19 @@ class ReviewList(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['hotels'] = Hotel.objects.all()
+
         return context
 
 @login_required
 def add_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
+        form.fields['hotel'].queryset = Hotel.objects.all()  # Include all hotels in the queryset
         if form.is_valid():
             post = form.save(commit=False)
-            post.user = request.user  # Assigns the logged-in user to the post
-            post.hotel = form.cleaned_data['hotel']  # Assigns the selected hotel to the post
+            post.user = request.user
+            post.hotel = form.cleaned_data['hotel']
             post.save()
             messages.success(request, 'Your post has been successfully added!')
             return redirect('post_list')
@@ -121,8 +127,11 @@ def add_post(request):
             messages.error(request, 'Please correct the error below.')
     else:
         form = PostForm()
-    
-    return render(request, 'todo/add_post.html', {'form': form})
+        form.fields['hotel'].queryset = Hotel.objects.all()  # Include all hotels in the queryset
+
+    context = {'form': form}
+    return render(request, 'todo/add_post.html', context)
+
 
 @login_required
 def add_comment(request, post_id):
@@ -141,6 +150,7 @@ def add_review_view(request, hotel_id):
     hotel = get_object_or_404(Hotel, pk=hotel_id)
     if request.method == "POST":
         form = ReviewForm(request.POST)
+        form.fields['hotel'].queryset = Hotel.objects.all()  # Include all hotels in the queryset
         if form.is_valid():
             review = form.save(commit=False)
             review.user = request.user

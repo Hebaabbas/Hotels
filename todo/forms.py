@@ -7,9 +7,11 @@ from todo.models import CustomUser
         
 class PostForm(forms.ModelForm):
     hotel = forms.ModelChoiceField(queryset=Hotel.objects.all(), required=True, label="Hotel")
+
     class Meta:
         model = Post
-        fields = ['title', 'content', 'image', 'hotel'] 
+        fields = ['title', 'content', 'image', 'hotel']
+
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -36,8 +38,12 @@ class CustomUserCreationForm(UserCreationForm):
         return user
 
 class ReviewForm(forms.ModelForm):
+    hotel = forms.ModelChoiceField(queryset=Hotel.objects.all(), required=True, label="Hotel")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['hotel'].queryset = Hotel.objects.all()
+
     class Meta:
         model = Review
         fields = ['content', 'room_type', 'duration', 'spa', 'breakfast']
-
-hotel_id = forms.IntegerField(widget=forms.HiddenInput())

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Hotel, Post, Comment, Reaction, Review
+from .models import CustomUser, Hotel, Post, Comment, Reaction, Review
 from django_summernote.admin import SummernoteModelAdmin
 from django import forms
 from todo.models import CustomUser
@@ -24,6 +24,12 @@ class PostAdmin(SummernoteModelAdmin):
             obj.user = request.user
         super().save_model(request, obj, form, change)
 
+
+@admin.register(CustomUser)
+class CustomUserAdmin(admin.ModelAdmin):
+    list_display = ['username', 'email', 'firstname', 'lastname', 'is_staff','is_superuser']
+    search_fields = ['username', 'email', 'firstname', 'lastname']
+    list_filter = ['is_staff','is_superuser']
 
 @admin.register(Hotel)
 class HotelAdmin(admin.ModelAdmin):

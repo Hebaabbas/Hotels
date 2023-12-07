@@ -119,7 +119,11 @@ DATABASES = {
         'PORT': '5432',  
     }
 }
-
+# CLOUDINARY_STORAGE = {
+#    'CLOUD_NAME': 'dpkp0q3zp',
+#    'API_KEY': '414439699269671',
+#    'API_SECRET': '0w4bdsDuaxBdjOb5uRUKQyfu-Ck',
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
