@@ -89,6 +89,7 @@ class PostList(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['hotels'] = Hotel.objects.all()
         context['comments'] = Comment.objects.all()
         context['reactions'] = Reaction.objects.all()
         return context
@@ -108,7 +109,6 @@ class ReviewList(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['hotels'] = Hotel.objects.all()
-
         return context
 
 @login_required
