@@ -29,3 +29,4 @@ document.addEventListener('DOMContentLoaded', function() {
         form.action = "{% url 'add_review' 0 %}".replace('/0/', '/' + hotelId + '/');
     });
 });
+

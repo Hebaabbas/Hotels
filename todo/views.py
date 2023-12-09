@@ -175,5 +175,4 @@ def delete_comment(request, comment_id):
         messages.success(request, 'Comment deleted successfully!')
     else:
         messages.error(request, 'You do not have permission to delete this comment.')
-    # Redirect to the appropriate view, maybe the post detail view
-    return redirect('post_list', post_id=comment.post.id)
+    return redirect('post_list')  # Redirects to the post list without any arguments
