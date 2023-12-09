@@ -127,8 +127,21 @@
                         </div>
                     </div>
                 {% endfor %}
-            </div>
 
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}" style="margin-right: 10px;" >Click for recent posts</a>
+                    {% endif %}
+                
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Click for older posts</a>
+                    {% endif %}
+                </div>
+            </div>
+                
+                
+
+        
             <!-- Column for Reviews -->
             <div class="col-md-6">
                 <h2 class="section-heading">Reviews</h2>
