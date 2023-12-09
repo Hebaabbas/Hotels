@@ -100,6 +100,7 @@
                             <h2 class="card-title">{{ post.title }}</h2>
                             <p class="card-text">{{ post.content }}</p>
                             <hr />
+
                             <!-- Comments for each post -->
                             {% for comment in post.comments.all %}
                                 <div class="comment">
@@ -120,6 +121,11 @@
                                     <button type="button" class="btn custom-button">👍</button>
                                     <button type="button" class="btn custom-button">👎</button>
                                 </form>
+                            {% endif %}
+
+                            <!-- Delete Button for Post -->
+                            {% if post.user == user %}
+                            <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">Delete Post</a>
                             {% endif %}
                         </div>
                     </div>
