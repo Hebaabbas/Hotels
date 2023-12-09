@@ -8,19 +8,10 @@ from django.contrib import messages
 from todo import views
 from .forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .forms import PostForm
 from .forms import CustomUserCreationForm
 from todo.models import CustomUser
 from .forms import ReviewForm
 from django.http import Http404  
-
-
-def your_view_function(request):
-    hotels = Hotel.objects.all()  
-    context = {
-        'hotels': hotels,
-    }
-    return render(request, 'posts.html', {'hotels': hotels})
 
 
 def get_index(request):
@@ -31,28 +22,6 @@ def contact_view(request):
     return render(request, 'todo/contact.html')
 
 
-def posts_view(request):
-    hotels = Hotel.objects.all()   
-    posts = Post.objects.all()
-    reviews = Review.objects.all()
-
-
-    # Check if the user is authenticated
-    if request.user.is_authenticated:
-        firstname = request.user.firstname
-        lastname = request.user.lastname
-    else:
-        firstname = ''
-        lastname = ''
-
-    context = {
-        'hotels': hotels,
-        'posts': posts,
-        'firstname': firstname,
-        'lastname': lastname,
-        'reviews': reviews,
-    }
-    return render(request, 'todo/posts.html', context)
      
 def sign_in_view(request):
     if request.method == 'POST':
@@ -86,6 +55,8 @@ class PostList(generic.ListView):
     template_name = "todo/posts.html"  
     queryset = Post.objects.all().order_by("-post_date")
     paginate_by = 5
+    context_object_name = 'post_list'
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -114,24 +85,36 @@ class ReviewList(generic.ListView):
 @login_required
 def add_post(request):
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        form.fields['hotel'].queryset = Hotel.objects.all()  # Include all hotels in the queryset
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.user = request.user
-            post.hotel = form.cleaned_data['hotel']
-            post.save()
-            messages.success(request, 'Your post has been successfully added!')
+        # Retrieve form data
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        hotel_id = request.POST.get('hotel')
+        image = request.FILES.get('image')
+
+        # Validation (you can add more complex validation as needed)
+        if not title or not content or not hotel_id:
+            messages.error(request, "Please fill in all required fields.")
             return redirect('post_list')
-        else:
-            messages.error(request, 'Please correct the error below.')
-    else:
-        form = PostForm()
-        form.fields['hotel'].queryset = Hotel.objects.all()  # Include all hotels in the queryset
 
-    context = {'form': form}
-    return render(request, 'todo/add_post.html', context)
+        # Create a new Post instance
+        post = Post(
+            title=title,
+            content=content,
+            user=request.user,
+            hotel_id=hotel_id,  # Assuming hotel_id is the primary key of a hotel
+            image=image  # Handle image file upload
+        )
 
+        # Save the new post
+        post.save()
+        messages.success(request, 'Your post has been successfully added!')
+        return redirect('post_list')
+
+    # Context for GET request
+    context = {
+        'hotels': Hotel.objects.all()
+    }
+    return render(request, 'todo/posts.html', context)
 
 @login_required
 def add_comment(request, post_id):
@@ -194,4 +177,3 @@ def delete_comment(request, comment_id):
         messages.error(request, 'You do not have permission to delete this comment.')
     # Redirect to the appropriate view, maybe the post detail view
     return redirect('post_list', post_id=comment.post.id)
-

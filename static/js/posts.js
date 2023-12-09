@@ -15,3 +15,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+
+
+function updateAction(hotelId) {
+    var form = document.getElementById('reviewForm');
+    form.action = '/todo/add_review/' + hotelId + '/';
+}
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('hotelNameReview').addEventListener('change', function() {
+        var hotelId = this.value;
+        var form = document.getElementById('reviewForm');
+        form.action = "{% url 'add_review' 0 %}".replace('/0/', '/' + hotelId + '/');
+    });
+});

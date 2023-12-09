@@ -60,33 +60,35 @@
             <div class="col-md-6">
                 <h2 class="section-heading">Posts</h2>
                 {% if user.is_authenticated %}
-                    <!-- Form to Add a Post -->
+                    <form method="post" action="{% url 'add_post' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="hotelName">Hotel Name:</label>
-                            <select name="hotelName" id="hotelName" class="form-control">
+                            <select name="hotel" id="hotelName" class="form-control">
                                 <option value="" selected>Select a Hotel</option>
                                 {% for hotel in hotels %}
                                     <option value="{{ hotel.id }}">{{ hotel.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-
                         <div class="form-group">
-                            <label for="postContent" class="form-label">New Post:</label>
+                            <label for="postTitle" class="form-label">Title:</label>
+                            <input type="text" name="title" id="postTitle" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="postContent" class="form-label">Content:</label>
                             <textarea class="form-control" id="postContent" name="content" required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="postImage" class="form-label">Upload Image:</label>
                             <input type="file" class="form-control-file" id="postImage" name="image">
                         </div>
-                        <form method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <button type="submit" class="btn custom-button">Add a post</button>
-                        </form>
-                    {% else %}
-                        <p>You must be logged in to post.</p>
-                    {% endif %}
+                        <button type="submit" class="btn custom-button">Add a post</button>
+                    </form>
+                {% else %}
+                    <p>You must be logged in to post.</p>
+                {% endif %}
+            
 
                 <!-- Loop through posts here -->
                 {% for post in post_list %}
