@@ -1,22 +1,15 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views import generic
-from .models import Post, Hotel, Review, Comment, Reaction 
+from django.views import generic, View
+from .models import Post, Hotel, Review, Comment, Reaction
 from django.db.models import Count, Q
 from django.contrib import messages
-from todo import views
-from .forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
-from todo.models import CustomUser
-from django.http import Http404  
 from django.core.paginator import Paginator
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-from django.views import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+
 
 # Renders the homepage
 def get_index(request):
