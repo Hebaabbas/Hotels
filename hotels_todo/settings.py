@@ -37,6 +37,7 @@ ALLOWED_HOSTS = [
     'scandic-hotels.herokuapp.com', 
     'localhost', 
     '8000-hebaabbas-hotels-yfhj6890j9f.ws-eu106.gitpod.io',
+    'scandic-hotels-bf73b24d7c6b.herokuapp.com',
 ]
 
 
