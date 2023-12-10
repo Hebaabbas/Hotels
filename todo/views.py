@@ -12,6 +12,11 @@ from .forms import CustomUserCreationForm
 from todo.models import CustomUser
 from django.http import Http404  
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views import View
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
 def get_index(request):
@@ -201,3 +206,26 @@ def delete_comment(request, comment_id):
     else:
         messages.error(request, 'You do not have permission to delete this comment.')
     return redirect('post_list')  # Redirects to the post list without any arguments
+
+
+class PostReaction(View):
+    
+    def post(self, request, post_id, reaction_type, *args, **kwargs):
+        post = get_object_or_404(Post, id=post_id)
+        user_reaction, created = Reaction.objects.get_or_create(post=post, user=request.user)
+
+        # If the reaction is not new
+        if not created:
+            # If the current reaction is the same as the existing one, remove it
+            if (reaction_type == 'up' and user_reaction.is_thumb_up) or (reaction_type == 'down' and not user_reaction.is_thumb_up):
+                user_reaction.delete()
+            else:
+                # Toggle between thumbs up and thumbs down based on the reaction_type
+                user_reaction.is_thumb_up = (reaction_type == 'up')
+                user_reaction.save()
+        else:
+            # Set the reaction type on a new reaction
+            user_reaction.is_thumb_up = (reaction_type == 'up')
+            user_reaction.save()
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('post_list')))

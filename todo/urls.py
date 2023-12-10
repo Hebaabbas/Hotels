@@ -1,6 +1,6 @@
 from . import views
 from django.urls import path
-from .views import sign_in_view, sign_up_view, delete_post, delete_review, delete_comment, add_review
+from .views import sign_in_view, sign_up_view, delete_post, delete_review, delete_comment, add_review, PostReaction
 
 
 urlpatterns = [
@@ -15,4 +15,5 @@ urlpatterns = [
     path('delete_post/<int:post_id>/', delete_post, name='delete_post'),
     path('delete_review/<int:review_id>/', views.delete_review, name='delete_review'),
     path('delete_comment/<int:comment_id>/', delete_comment, name='delete_comment'),
+    path('post/<int:post_id>/react/<str:reaction_type>/', PostReaction.as_view(), name='post_reaction'),
 ]

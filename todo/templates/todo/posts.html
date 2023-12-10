@@ -112,17 +112,40 @@
                                 </div>
                             {% endfor %}
 
-                            <!-- Add a comment form -->
                             {% if user.is_authenticated %}
-                                <form action="{% url 'add_comment' post.id %}" method="post">
+                            <form action="{% url 'add_comment' post.id %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <input type="text" name="comment" class="form-control custom-input" placeholder="Add a comment">
+                                <button type="submit" class="btn custom-button">Comment</button>
+                            </form>
+                        
+                            <div class="d-inline">
+                                <form action="{% url 'post_reaction' post.id 'up' %}" method="POST" class="d-inline">
                                     {% csrf_token %}
-                                    <input type="text" name="comment" class="form-control custom-input" placeholder="Add a comment">
-                                    <button type="submit" class="btn custom-button">Comment</button>
-                                    <button type="button" class="btn custom-button">👍</button>
-                                    <button type="button" class="btn custom-button">👎</button>
+                                    <button type="submit" class="btn custom-button thumb-up">
+                                        👍 
+                                        <span>
+                                            {% if post.num_thumbs_up > 0 %}
+                                                {{ post.num_thumbs_up }}
+                                            {% endif %}
+                                        </span>
+                                    </button>
                                 </form>
-                            {% endif %}
-
+                        
+                                <form action="{% url 'post_reaction' post.id 'down' %}" method="POST" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn custom-button thumb-down">
+                                        👎 
+                                        <span>
+                                            {% if post.num_thumbs_down > 0 %}
+                                                {{ post.num_thumbs_down }}
+                                            {% endif %}
+                                        </span>
+                                    </button>
+                                </form>
+                            </div>
+                        {% endif %}
+                        
                             <!-- Delete Button for Post -->
                             {% if post.user == user %}
                                 <form action="{% url 'delete_post' post.id %}" method="post">
