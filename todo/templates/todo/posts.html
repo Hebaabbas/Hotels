@@ -135,14 +135,13 @@
                 {% endfor %}
 
                 
-
                 <div class="pagination">
-                    {% if page_obj.has_previous %}
-                        <a href="?page={{ page_obj.previous_page_number }}" style="margin-right: 10px;" >Click for recent posts</a>
+                    {% if post_list.has_previous %}
+                        <a href="?post_page={{ post_list.previous_page_number }}&review_page={{ reviews.number }}" style="margin-right: 10px;">Previous Posts</a>
                     {% endif %}
-                
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">Click for older posts</a>
+                    <!-- Page number links for posts can go here -->
+                    {% if post_list.has_next %}
+                        <a href="?post_page={{ post_list.next_page_number }}&review_page={{ reviews.number }}">Next Posts</a>
                     {% endif %}
                 </div>
             </div>
@@ -226,12 +225,12 @@
                 {% endfor %}
 
                 <div class="pagination">
-                    {% if page_obj.has_previous %}
-                        <a href="?page={{ page_obj.previous_page_number }}" style="margin-right: 10px;" >Click for recent posts</a>
+                    {% if reviews.has_previous %}
+                        <a href="?review_page={{ reviews.previous_page_number }}&post_page={{ post_list.number }}" style="margin-right: 10px;">Previous Reviews</a>
                     {% endif %}
-                
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">Click for older posts</a>
+                    <!-- Page number links for reviews can go here -->
+                    {% if reviews.has_next %}
+                        <a href="?review_page={{ reviews.next_page_number }}&post_page={{ post_list.number }}">Next Reviews</a>
                     {% endif %}
                 </div>
 

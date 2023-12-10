@@ -11,6 +11,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 from todo.models import CustomUser
 from django.http import Http404  
+from django.core.paginator import Paginator
+
 
 def get_index(request):
     return render(request, 'todo/index.html')
@@ -43,27 +45,41 @@ def sign_up_view(request):
         form = CustomUserCreationForm()
     return render(request, 'todo/signIn.html', {'form': form})
 
+
 class PostList(generic.ListView):
     model = Post
     template_name = "todo/posts.html"  
-    queryset = Post.objects.all().order_by("-post_date")
     paginate_by = 4
     context_object_name = 'post_list'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['hotels'] = Hotel.objects.all()
-        context['comments'] = Comment.objects.all()
-        context['reactions'] = Reaction.objects.all()
-        context['reviews'] = Review.objects.all().order_by("-review_date")
 
-        return context
+        # Get page number for posts
+        post_page = self.request.GET.get('post_page', 1)
 
-    def get_queryset(self):
-        return Post.objects.annotate(
+        # Paginate the posts
+        posts = Post.objects.annotate(
             num_thumbs_up=Count('reactions', filter=Q(reactions__is_thumb_up=True)),
             num_thumbs_down=Count('reactions', filter=Q(reactions__is_thumb_up=False))
         ).order_by('-post_date')
+        post_paginator = Paginator(posts, self.paginate_by)
+        context['post_list'] = post_paginator.get_page(post_page)
+
+        # Get page number for reviews
+        review_page = self.request.GET.get('review_page', 1)
+
+        # Paginate the reviews
+        reviews = Review.objects.all().order_by("-review_date")
+        review_paginator = Paginator(reviews, self.paginate_by)
+        context['reviews'] = review_paginator.get_page(review_page)
+
+        context['hotels'] = Hotel.objects.all()
+        context['comments'] = Comment.objects.all()
+        context['reactions'] = Reaction.objects.all()
+
+        return context
+
 
 @login_required
 def add_post(request):
