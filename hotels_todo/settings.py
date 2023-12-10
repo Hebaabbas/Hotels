@@ -121,11 +121,11 @@ DATABASES = {
 #    }
 #}
 
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': 'your_cloud_name',
-#     'API_KEY': 'your_api_key',
-#     'API_SECRET': 'your_api_secret',
-# }
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dpkp0q3zp',
+    'API_KEY': '414439699269671',
+    'API_SECRET': '0w4bdsDuaxBdjOb5uRUKQyfu-Ck',
+}
 
 
 
@@ -169,9 +169,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
