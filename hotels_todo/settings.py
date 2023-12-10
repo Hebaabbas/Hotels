@@ -101,27 +101,29 @@ WSGI_APPLICATION = 'hotels_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get("postgres://ynhraxod:UNbzbI07BJiYsRTCgPs1A2pChzgDQlc7@ella.db.elephantsql.com/ynhraxod"))
+}
+
+
+#    DATABASES = {
+#        'default': {
+#            'ENGINE': 'django.db.backends.sqlite3',
+#            'NAME': BASE_DIR / 'db.sqlite3',
+#        }
+#    }
+
+
 #DATABASES = {
 #    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'data',
+#        'USER': 'gitpod',
+#        'PASSWORD': 'hotel0000',
+#        'HOST': 'localhost',  
+#        'PORT': '5432',  
 #    }
 #}
-
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
- }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'data',
-        'USER': 'gitpod',
-        'PASSWORD': 'hotel0000',
-        'HOST': 'localhost',  
-        'PORT': '5432',  
-    }
-}
 # CLOUDINARY_STORAGE = {
 #    'CLOUD_NAME': 'dpkp0q3zp',
 #    'API_KEY': '414439699269671',
