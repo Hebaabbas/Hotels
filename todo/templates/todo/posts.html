@@ -125,7 +125,10 @@
 
                             <!-- Delete Button for Post -->
                             {% if post.user == user %}
-                            <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">Delete Post</a>
+                                <form action="{% url 'delete_post' post.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Delete Post</button>
+                                </form>
                             {% endif %}
                         </div>
                     </div>
