@@ -1,7 +1,9 @@
 import os
+from pathlib import Path
 import dj_database_url
-if os.path.isfile('env.py'):
+if os.path.isfile("env.py"):
     import env
+
 
 """
 Django settings for hotels_todo project.
@@ -14,8 +16,6 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
-from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,12 +33,8 @@ DEBUG = False
 
 X_SAME_OPTION: 'SAMEORIGIN'
 
-ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
- #   'scandic-hotels.herokuapp.com', 
- #   'localhost', 
- #   '8000-hebaabbas-hotels-yfhj6890j9f.ws-eu106.gitpod.io',
- #   'scandic-hotels-bf73b24d7c6b.herokuapp.com',
 
+ALLOWED_HOSTS = ['localhost', 'scandic-hotels.herokuapp.com']
 
 
 # Application definition
@@ -102,18 +98,18 @@ WSGI_APPLICATION = 'hotels_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-}
 
-
-#    DATABASES = {
-#        'default': {
-#            'ENGINE': 'django.db.backends.sqlite3',
-#            'NAME': BASE_DIR / 'db.sqlite3',
-#        }
-#    }
-
+if development:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }
 
 #DATABASES = {
 #    'default': {
@@ -125,11 +121,13 @@ DATABASES = {
 #        'PORT': '5432',  
 #    }
 #}
-# CLOUDINARY_STORAGE = {
-#    'CLOUD_NAME': 'dpkp0q3zp',
-#    'API_KEY': '414439699269671',
-#    'API_SECRET': '0w4bdsDuaxBdjOb5uRUKQyfu-Ck',
-#}
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dpkp0q3zp',
+    'API_KEY': '414439699269671',
+    'API_SECRET': '0w4bdsDuaxBdjOb5uRUKQyfu-Ck',
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
