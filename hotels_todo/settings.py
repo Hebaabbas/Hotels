@@ -34,8 +34,7 @@ DEBUG = True
 X_SAME_OPTION: 'SAMEORIGIN'
 
 
-ALLOWED_HOSTS = ['localhost', 'scandic-hotels.herokuapp.com', '8000-hebaabbas-hotels-yfhj6890j9f.ws-eu106.gitpod.io']
-
+ALLOWED_HOSTS = ['localhost', 'scandic-hotels.herokuapp.com', '8000-hebaabbas-hotels-yfhj6890j9f.ws-eu106.gitpod.io', 'scandic-hotels-bf73b24d7c6b.herokuapp.com']
 
 # Application definition
 
