@@ -98,6 +98,7 @@
                                 <img class="card-img-top" src="{{ post.image.url }}">
                             {% endif %}
                             <h2 class="card-title">{{ post.title }}</h2>
+                            <p class="text-muted">Posted by {{ post.user.username }}</p>
                             <p class="card-text">{{ post.content }}</p>
                             <hr />
 
@@ -228,6 +229,7 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <h3 class="card-title">Review for {{ review.hotel.name }}</h3>
+                            <p class="text-muted">Posted by {{ review.user.username }}</p>
                             <p class="card-text">{{ review.content }}</p>
                             
                             <!-- Review Details  -->
