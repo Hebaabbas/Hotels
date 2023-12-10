@@ -151,48 +151,48 @@
             <div class="col-md-6">
                 <h2 class="section-heading">Reviews</h2>
                 {% if user.is_authenticated %}
-                    <!-- Form to Add a Review -->
-                    <form method="post" enctype="multipart/form-data" class="review-form">
-                        {% csrf_token %}
-                        <input type="hidden" name="hotel" id="hotel" value="">
-                        <div class="form-group">
-                            <label for="hotelNameReview" class="form-label">Hotel Name:</label>
-                            <select name="hotelName" id="hotelNameReview" class="form-control">
-                                <option value="" selected>Select a Hotel</option>
-                                {% for hotel in hotels %}
-                                    <option value="{{ hotel.id }}">{{ hotel.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="roomType" class="form-label">Room Type:</label>
-                            <input type="text" class="form-control" id="roomType" name="roomType" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="spaIncluded">Spa Included:</label>
-                            <select class="form-control" id="spaIncluded" name="spaIncluded">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="breakfastIncluded">Breakfast Included:</label>
-                            <select class="form-control" id="breakfastIncluded" name="breakfastIncluded">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="durationStay" class="form-label">Duration of Stay (in days):</label>
-                            <input type="number" class="form-control" id="durationStay" name="durationStay" required oninput="validateDuration(this)">
-                            <span id="durationError" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="reviewContent" class="form-label">Your Review:</label>
-                            <textarea class="form-control custom-textarea" id="reviewContent" name="content" required></textarea>
-                        </div>
-                        <button type="submit" class="btn custom-button">Add Review</button>
-                    </form>
+
+                <!-- Form to Add a Review -->
+                <form method="post" action="{% url 'add_review' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="hotelNameReview" class="form-label">Hotel Name:</label>
+                        <select name="hotel_id" id="hotelNameReview" class="form-control">
+                            <option value="" selected>Select a Hotel</option>
+                            {% for hotel in hotels %}
+                                <option value="{{ hotel.id }}">{{ hotel.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewContent" class="form-label">Your Review:</label>
+                        <textarea class="form-control" id="reviewContent" name="content" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="roomType" class="form-label">Room Type:</label>
+                        <input type="text" class="form-control" id="roomType" name="room_type" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="durationStay" class="form-label">Duration of Stay (in days):</label>
+                        <input type="number" class="form-control" id="durationStay" name="duration" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="spaIncluded">Spa Included:</label>
+                        <select class="form-control" id="spaIncluded" name="spa">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="breakfastIncluded">Breakfast Included:</label>
+                        <select class="form-control" id="breakfastIncluded" name="breakfast">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn custom-button">Add Review</button>
+                </form>
+
                 {% else %}
                     <p>You must be logged in to post reviews.</p>
                 {% endif %}
@@ -200,15 +200,38 @@
         
                 <!-- Loop through reviews here -->
                 {% for review in reviews %}
-                    <div class="review">
-                        <h3>Review for {{ review.hotel.name }}</h3>
-                        <p>{{ review.content }}</p>
-                        <!-- Delete Button for Review -->
-                        {% if review.user == user %}
-                            <a href="{% url 'delete_review' review.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this review?');">Delete Review</a>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="card-title">Review for {{ review.hotel.name }}</h3>
+                            <p class="card-text">{{ review.content }}</p>
+                            
+                            <!-- Review Details  -->
+                            <p class="card-text"><small>Room Type: {{ review.room_type }}</small></p>
+                            <p class="card-text"><small>Stay Duration: {{ review.duration }} days</small></p>
+                            <p class="card-text"><small>Spa Included: {{ review.spa | yesno:"Yes,No" }}</small></p>
+                            <p class="card-text"><small>Breakfast Included: {{ review.breakfast | yesno:"Yes,No" }}</small></p>
+
+                            <!-- Delete Button for Review -->
+                            {% if review.user == user %}
+                            <form action="{% url 'delete_review' review.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Delete Review</button>
+                            </form>
                         {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
+
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}" style="margin-right: 10px;" >Click for recent posts</a>
+                    {% endif %}
+                
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Click for older posts</a>
+                    {% endif %}
+                </div>
+
             </div>
         </div>
     </div>

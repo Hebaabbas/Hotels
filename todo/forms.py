@@ -1,12 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import  Review, Hotel
 from todo.models import CustomUser
-
-
-        
-
-
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -31,14 +25,3 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
-class ReviewForm(forms.ModelForm):
-    hotel = forms.ModelChoiceField(queryset=Hotel.objects.all(), required=True, label="Hotel")
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['hotel'].queryset = Hotel.objects.all()
-
-    class Meta:
-        model = Review
-        fields = ['content', 'room_type', 'duration', 'spa', 'breakfast']

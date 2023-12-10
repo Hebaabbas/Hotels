@@ -10,18 +10,13 @@ from .forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 from todo.models import CustomUser
-from .forms import ReviewForm
 from django.http import Http404  
-
 
 def get_index(request):
     return render(request, 'todo/index.html')
 
-
 def contact_view(request):
     return render(request, 'todo/contact.html')
-
-
      
 def sign_in_view(request):
     if request.method == 'POST':
@@ -37,7 +32,6 @@ def sign_in_view(request):
 
     return render(request, 'todo/signIn.html')
 
-
 def sign_up_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -49,20 +43,20 @@ def sign_up_view(request):
         form = CustomUserCreationForm()
     return render(request, 'todo/signIn.html', {'form': form})
 
-
 class PostList(generic.ListView):
     model = Post
     template_name = "todo/posts.html"  
     queryset = Post.objects.all().order_by("-post_date")
-    paginate_by = 5
+    paginate_by = 4
     context_object_name = 'post_list'
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['hotels'] = Hotel.objects.all()
         context['comments'] = Comment.objects.all()
         context['reactions'] = Reaction.objects.all()
+        context['reviews'] = Review.objects.all().order_by("-review_date")
+
         return context
 
     def get_queryset(self):
@@ -70,17 +64,6 @@ class PostList(generic.ListView):
             num_thumbs_up=Count('reactions', filter=Q(reactions__is_thumb_up=True)),
             num_thumbs_down=Count('reactions', filter=Q(reactions__is_thumb_up=False))
         ).order_by('-post_date')
-
-class ReviewList(generic.ListView):
-    model = Review
-    queryset = Review.objects.all().order_by("-review_date")
-    template_name = "todo/posts.html"  
-    paginate_by = 4
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['hotels'] = Hotel.objects.all()
-        return context
 
 @login_required
 def add_post(request):
@@ -129,21 +112,47 @@ def add_comment(request, post_id):
     return redirect('post_list')
 
 
-def add_review_view(request, hotel_id):
-    hotel = get_object_or_404(Hotel, pk=hotel_id)
+@login_required
+def add_review(request):
     if request.method == "POST":
-        form = ReviewForm(request.POST)
-        form.fields['hotel'].queryset = Hotel.objects.all()  # Include all hotels in the queryset
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.user = request.user
-            review.hotel = hotel
-            review.save()
-            # Redirect to the hotel detail page or another appropriate view
-            return redirect('hotel_detail', hotel_id=hotel_id)
-    else:
-        # Handle the case where 'hotel_id' is not provided in the URL or form data
-        raise Http404("Hotel not found")
+        # Retrieve form data
+        hotel_id = request.POST.get('hotel')
+        room_type = request.POST.get('room_type')
+        duration = request.POST.get('duration')
+        spa = request.POST.get('spa') == '1'  # Convert to boolean
+        breakfast = request.POST.get('breakfast') == '1'  # Convert to boolean
+        content = request.POST.get('content')
+
+        # Validation
+        if not hotel_id or not room_type or not duration or not content:
+            messages.error(request, "Please fill in all required fields.")
+            return redirect('post_list')
+
+        # Create a new Review instance
+        review = Review(
+            user=request.user,
+            hotel_id=hotel_id,
+            room_type=room_type,
+            duration=duration,
+            spa=spa,
+            breakfast=breakfast,
+            content=content
+        )
+        # Context for GET request
+        context = {
+            'hotels': Hotel.objects.all(),
+            'post_list': Post.objects.all().order_by("-post_date"),
+            'reviews': Review.objects.all().order_by("-review_date"),
+        }
+
+        # Save the new review
+        review.save()
+        messages.success(request, 'Your review has been successfully added!')
+        return redirect('post_list')
+
+    # Redirect to the post list page if the method is not POST
+    return render(request, 'todo/posts.html', context)
+
 
 
 @login_required
@@ -162,10 +171,10 @@ def delete_review(request, review_id):
     if review.user == request.user:
         review.delete()
         messages.success(request, 'Review deleted successfully!')
-        return redirect('review_list')  # Redirect to the review list page
+        return redirect('post_list')  # Redirect to the review list page
     else:
         messages.error(request, 'You do not have permission to delete this review.')
-        return redirect('review_list')  # Redirect to the review list page
+        return redirect('post_list')  # Redirect to the review list page
 
 @login_required
 def delete_comment(request, comment_id):
