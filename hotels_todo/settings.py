@@ -5,6 +5,7 @@ if os.path.isfile("env.py"):
     import env
 
 
+
 """
 Django settings for hotels_todo project.
 
@@ -29,10 +30,9 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 X_SAME_OPTION: 'SAMEORIGIN'
-
 
 ALLOWED_HOSTS = ['localhost', 'scandic-hotels.herokuapp.com', '8000-hebaabbas-hotels-yfhj6890j9f.ws-eu106.gitpod.io', 'scandic-hotels-bf73b24d7c6b.herokuapp.com']
 
@@ -121,11 +121,12 @@ DATABASES = {
 #    }
 #}
 
-#CLOUDINARY_STORAGE = {
-#    'CLOUD_NAME': 'dpkp0q3zp',
-#   'API_KEY': '414439699269671',
-#    'API_SECRET': '0w4bdsDuaxBdjOb5uRUKQyfu-Ck',
-#}
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': 'your_cloud_name',
+#     'API_KEY': 'your_api_key',
+#     'API_SECRET': 'your_api_secret',
+# }
+
 
 
 # Password validation
@@ -169,8 +170,14 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
