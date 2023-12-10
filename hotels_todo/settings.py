@@ -101,14 +101,15 @@ WSGI_APPLICATION = 'hotels_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("postgres://ynhraxod:UNbzbI07BJiYsRTCgPs1A2pChzgDQlc7@ella.db.elephantsql.com/ynhraxod"))
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
  }
 
 DATABASES = {
