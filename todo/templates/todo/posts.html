@@ -18,6 +18,7 @@
 </head>
 <body>
     <header>
+        <!-- Logo and navigation bar -->
         <div class="row no-gutters">
             <a href="{% url 'home' %}" class="col-md-3 logo">
             </a>
@@ -54,11 +55,13 @@
         </div>
     </header>
 
+    <!-- Main Content Section -->
     <div class="container">
         <div class="row">
             <!-- Column for Posts -->
             <div class="col-md-6">
                 <h2 class="section-heading">Posts</h2>
+                <!-- Post Submission Form -->
                 {% if user.is_authenticated %}
                     <form method="post" action="{% url 'add_post' %}" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -88,8 +91,6 @@
                 {% else %}
                     <p>You must be logged in to post.</p>
                 {% endif %}
-            
-
                 <!-- Loop through posts here -->
                 {% for post in post_list %}
                     <div class="card mb-4">

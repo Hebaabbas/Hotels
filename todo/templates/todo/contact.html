@@ -20,6 +20,7 @@
 </script>
 </head>
 <body>
+    <!-- Header Section: Contains logo and navigation bar -->
     <header>
         <div class="row no-gutters">
             <a href="{% url 'home' %}" class="col-md-3 logo">
@@ -66,14 +67,16 @@
                 <h3 class="contact-heading uppercase text-center">Do you wish to contact us?</h3>
                 <h5 class="contact-heading text-center">If you have any questions or inquiries, please feel free to reach out to us using the form below.
                 </h5>
-
+                <!-- Contact Form -->
                 <div class="center-form">
                     <form onsubmit="return sendMail(this);">
+                        <!-- Input fields for the contact form -->
                         <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name" required />
                         <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" required />
                         <textarea rows="6" name="message" id="message" class="form-control" placeholder="Enter your message" required></textarea>
                         <div class="form-row text-center">
                             <div class="col">
+                                <!-- Submit button for the form -->
                                 <button type="submit" class="btn btn-secondary center-block">Send</button>
                             </div>
                         </div>
@@ -82,6 +85,7 @@
             </div>
         </div>
     </section>
+    <!-- Footer Section: Contains social media links -->
     <footer class="container-fluid">
         <div id="footer-details" class="row">
             <div class="col-sm-6">

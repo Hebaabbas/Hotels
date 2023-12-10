@@ -18,13 +18,15 @@ from django.views import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-
+# Renders the homepage
 def get_index(request):
     return render(request, 'todo/index.html')
 
+# Renders the contact page
 def contact_view(request):
     return render(request, 'todo/contact.html')
-     
+
+# Handles user sign-in     
 def sign_in_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -39,6 +41,7 @@ def sign_in_view(request):
 
     return render(request, 'todo/signIn.html')
 
+# Handles user registration
 def sign_up_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -50,7 +53,7 @@ def sign_up_view(request):
         form = CustomUserCreationForm()
     return render(request, 'todo/signIn.html', {'form': form})
 
-
+# Lists posts in a paginated view
 class PostList(generic.ListView):
     model = Post
     template_name = "todo/posts.html"  
@@ -85,7 +88,7 @@ class PostList(generic.ListView):
 
         return context
 
-
+# Handles addition of a new post
 @login_required
 def add_post(request):
     if request.method == 'POST':
@@ -120,6 +123,7 @@ def add_post(request):
     }
     return render(request, 'todo/posts.html', context)
 
+# Handles addition of a comment to a post
 @login_required
 def add_comment(request, post_id):
     if request.method == 'POST':
@@ -132,7 +136,7 @@ def add_comment(request, post_id):
             messages.error(request, 'Comment cannot be empty.')
     return redirect('post_list')
 
-
+# Handles addition of a new review
 @login_required
 def add_review(request):
     if request.method == "POST":
@@ -174,8 +178,7 @@ def add_review(request):
     # Redirect to the post list page if the method is not POST
     return render(request, 'todo/posts.html', context)
 
-
-
+# Handles deletion of a post
 @login_required
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -186,6 +189,7 @@ def delete_post(request, post_id):
         messages.error(request, 'You do not have permission to delete this post.')
     return redirect('post_list')
 
+# Handles deletion of a review
 @login_required
 def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
@@ -197,6 +201,7 @@ def delete_review(request, review_id):
         messages.error(request, 'You do not have permission to delete this review.')
         return redirect('post_list')  # Redirect to the review list page
 
+# Handles deletion of a comment
 @login_required
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
@@ -207,7 +212,7 @@ def delete_comment(request, comment_id):
         messages.error(request, 'You do not have permission to delete this comment.')
     return redirect('post_list')  # Redirects to the post list without any arguments
 
-
+# Handles post reactions (thumbsup/thumbsdown)
 class PostReaction(View):
     
     def post(self, request, post_id, reaction_type, *args, **kwargs):

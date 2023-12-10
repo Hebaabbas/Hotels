@@ -4,7 +4,9 @@ from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.db import models
 
+# Custom manager for CustomUser model
 class CustomUserManager(BaseUserManager):
+    # Function to create a standard user
     def create_user(self, username, email, password=None, **extra_fields):
         if not email:
             raise ValueError("The Email field must be set")
@@ -13,7 +15,7 @@ class CustomUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-
+    # Function to create a superuser
     def create_superuser(self, username, email, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
@@ -25,6 +27,7 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(username, email, password, **extra_fields)
 
+# Custom user model
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=100, unique=True)
@@ -48,9 +51,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
-
-
-
+# Model for hotels
 class Hotel(models.Model):
     name = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
@@ -63,6 +64,7 @@ class Hotel(models.Model):
     def __str__(self):
         return self.name
 
+# Model for posts
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
@@ -76,6 +78,7 @@ class Post(models.Model):
     class Meta:
         db_table = 'posts'
 
+    # Methods to count thumbs up and down
     def number_of_thumbs_up(self):
         return self.reactions.filter(is_thumb_up=True).count()
 
@@ -85,6 +88,7 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+# Model for reactions (likes/dislikes)
 class Reaction(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='reactions')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -93,6 +97,7 @@ class Reaction(models.Model):
     class Meta:
         db_table = 'reactions'
 
+# Model for comments on posts
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -105,6 +110,7 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment by {self.user.username} on {self.post.title}"
 
+# Model for reviews on hotels
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name="reviews")

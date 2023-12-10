@@ -16,6 +16,7 @@
     <title>Scandic Hotels</title>
 </head>
 <body>
+    <!-- Header Section: Contains logo and navigation bar -->
     <header>
         <div class="row no-gutters">
             <a href="{% url 'home' %}" class="col-md-3 logo">
@@ -52,7 +53,9 @@
             </div>
         </div>
     </header>
+    <!-- Main Content Section -->
     <section class="container-fluid">
+    <!-- Explore Scandic Section -->
         <div class="row row-table">
             <div class="col-md-8 explore-scandic section-column">
                 <div class="row">
@@ -107,6 +110,7 @@
             </div>
         </div>
     </section>
+    <!-- Our Head Offices Section -->
     <section class="container-fluid">
         <div class="row row-table">
             <div class="col-md-8 scandic-office section-column">
@@ -179,10 +183,13 @@
             </div>
         </div>
         </div>
+
+        <!-- Google Maps Integration -->
         <div id="map"></div>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvKtF43f58ZR_bb2izLJIz-vKxztJ9jdk&libraries=places&callback=initMap"></script>
     </section>
-    
+
+    <!-- Footer Section: Contains social media links and other footer content -->
     <footer class="container-fluid">
         <div id="footer-details" class="row">
             <div class="col-sm-6">
@@ -210,8 +217,9 @@
             </div>
     </footer>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-<script type="module" src="./assets/js/maps.js"></script>
-<script>
+    <script type="module" src="./assets/js/maps.js"></script>
+    <script>
+    // Google Maps Initialization
     function initMap() {
         let sweden = { lat: 59.349930, lng: 18.045120 };
         let map = new google.maps.Map(

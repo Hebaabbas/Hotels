@@ -12,6 +12,7 @@
     <title>Scandic Hotels</title>
 </head>
 <body>
+    <!-- Header Section: Contains logo and navigation bar -->
     <header>
         <div class="row no-gutters">
             <a href="{% url 'home' %}" class="col-md-3 logo">
@@ -61,6 +62,7 @@
                     <form action="{% url 'signIn' %}" method="post">
                         {% csrf_token %}
                         {{ sign_in_form.as_p }}
+                        <!-- Username and Password Fields -->
                         <div class="form-group">
                             <label for="signin-username" class="form-label">Username:</label>
                             <input type="text" class="form-control custom-input" id="signin-username" name="username" required>
@@ -69,10 +71,10 @@
                             <label for="signin-password" class="form-label">Password:</label>
                             <input type="password" class="form-control custom-input" id="signin-password" name="password" required>
                         </div>
+                        <!-- Submit Button -->
                         <button type="submit" class="btn custom-button">Sign In</button>
                     </form>
                 </div>
-                <!-- Sign-Up Form -->
                 <!-- Sign-Up Form -->
                 <div class="col-md-6">
                     <h2 class="section-heading">Sign Up</h2>
@@ -95,7 +97,7 @@
                                 </div>
                             </div>
                         {% endfor %}
-                
+                        <!-- Submit Button -->
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-primary">Sign Up</button>
