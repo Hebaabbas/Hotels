@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora&display=swap:100,200,300,400,500,600,700|Exo:100,200,300,400,500,600,700');
-https://res.cloudinary.com/dpkp0q3zp/image/upload/v1702211979/static/images/scandic.1f87d245813a.jpg
 
 body{
     background-color: #f1dbdb;
@@ -54,7 +53,7 @@ header {
 }
 
 .logo {
-    background: url("../images/scandic.jpeg");
+    background-image: url('https://res.cloudinary.com/dpkp0q3zp/image/upload/v1702211979/static/images/scandic.1f87d245813a.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
