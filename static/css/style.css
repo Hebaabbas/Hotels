@@ -167,9 +167,9 @@ footer {
 
 .contact-heading{
     font-family: "Lora", sans-serif;
-    font weight:300;
+    font weight: 300;
     margin-top: 25px;
-    margin-buttom: 10px;
+    margin-bottom: 10px;
 }
 .center-form{
     padding-top: 15px;
@@ -195,6 +195,3 @@ button[type="submit"] {
     }
 }
 
-div#map {
-    min-height: 360px;
-}
