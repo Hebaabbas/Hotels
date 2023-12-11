@@ -107,9 +107,6 @@ WSGI_APPLICATION = 'hotels_todo.wsgi.application'
 #       }
 #   }
 
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-}
 
 #DATABASES = {
 #    'default': {
@@ -121,6 +118,10 @@ DATABASES = {
 #        'PORT': '5432',  
 #    }
 #}
+
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dpkp0q3zp',
